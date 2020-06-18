@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="home.css" type="text/css">
+    <title>Example App</title>
+</head>
+<body>
+  <div class="container">
+
+  <div class="upload_section">
+
+  <form 
+  
+    id  =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action="/profile"
+     method    =  "post"
+     >
+  <input type="file"  name="avatar">
+  
+  {{!-- <a href="uploadReady">Upload</a> --}}
+  <button type="submit"  value="Upload Image">UPLOAD</button>
+  </div>
+  <div class="download_btn">
+<a href="http://127.0.0.1:8080" target="blank">Download</a>
+  </div>
+   </form>
+   </div>
+</body>
+</html>

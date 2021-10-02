@@ -158,7 +158,7 @@ requestFileUploadStream(function(contents) {
 });
 
 function runTest(contents) {
-    console.log("ek baar confirm kra do file path",filePath)
+    console.log("test PATH",filePath)
     // var expectedFileContents = fs.readFileSync(filePath, 'utf8');
     // if ( ! contents ) { console.error('No Contents'); }
     // else if ( contents.headers['content-type'] !== contentType ) {

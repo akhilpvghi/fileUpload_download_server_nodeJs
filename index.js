@@ -21,7 +21,7 @@ app.listen(app.get('port'), function() {
 
 
 app.post('/profile', upload.single('avatar'), function (req, res, next) {
-  console.log("path aaja ---> ",req.file)
+  console.log("GET PATH ---> ",req.file)
   res.render('goback');
   filePath= req.file.path;
   app.use(function (req, res, next) {

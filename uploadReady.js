@@ -52,8 +52,9 @@ app.put('/put', function(request, response) {
 function curlFileUpload(callback) {
     var curlCommand;
     // curlCommand = 'curl -v -X PUT -L "'+putURL+'" --header "Content-Type:'+contentType+'" --header "Transfer-Encoding:'+transferEncoding+'" -T "'+filePath+'"';
-    curlCommand = 'curl -X PUT --upload-file "'+filePath+'" "'+putURL+'"';
-    var exec = require('child_process').exec;
+    //curlCommand = 'curl -X PUT --upload-file "'+filePath+'" "'+putURL+'"';
+	curlCommand = 'curl -k -T "'+filePath+'" "'+putURL+'"';
+	var exec = require('child_process').exec;
     var child = exec(curlCommand);
     var contents = '';
     child.stdout.on('data', function(data) {

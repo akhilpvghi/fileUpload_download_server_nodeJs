@@ -9,12 +9,6 @@ n
     <title>Example App</title>
 </head>
 <body>
-<script>
-function newDoc() {
-  var download_path = location.hostname + ":8080";
-  window.open(download_path, '_blank');
-}
-</script>
   <div class="container">
 ​
   <div class="upload_section">
@@ -26,14 +20,13 @@ function newDoc() {
      action="/profile"
      method    =  "post"
      >
-  <input type="file"  name="avatar">
+  <input type="file"  name="avatar" multiple="multiple">
   
   {{!-- <a href="uploadReady">Upload</a> --}}
-  <button type="submit"  value="Upload Image">UPLOAD</button>
+  <button type="submit" >UPLOAD</button>
   </div>
   <div class="download_btn">
-<!--<a href="http://127.0.0.1:8080" target="blank">Download</a> -->
-<input type="button" value="Download" onclick="newDoc()">
+<a href="/" target="blank" onclick="javascript:event.target.port=8080">Download</a>
   </div>
    </form>
    </div>

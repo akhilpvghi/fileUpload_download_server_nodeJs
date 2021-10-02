@@ -2,11 +2,12 @@
 var express = require('express');
 var app = express();
 var multer  =   require('multer');
-var putURL = 'http://localhost:8000';
+var putURL = 'http://localhost:8000/';
 
 var filePath ;
+global.MAX_UPLOAD_LIMIT = 10;
 
-var upload = multer({ dest: '../uploads/' })
+
 
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'))
@@ -19,40 +20,46 @@ app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
 
-
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
-  console.log("GET PATH ---> ",req.file)
-  res.render('goback');
-  filePath= req.file.path;
-  app.use(function (req, res, next) {
-    curlFileUpload(res);
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '../uploads');
+     },
+    filename: function (req, file, cb) {
+        cb(null , file.originalname);
+    }
 });
 
-function curlFileUpload(res ) {
-    var curlCommand;
-    curlCommand = 'curl -X PUT --upload-file "'+filePath+'" "'+putURL+'"';
-    var exec = require('child_process').exec;
-    var child = exec(curlCommand);
-    res.end("done");
-    var contents = '';
-    child.stdout.on('data', function(data) {
-        contents += data;
-        res.end("done");
-    });
-    child.stderr.on('data', function(data) {
-        console.log('error: ' + data);
-        res.end("done");
-    });
-    child.on('close', function(code) {
-        try {
-            contents = JSON.parse(contents);
-            res.end("done");
-        } catch(e) {
-            res.end("done");
-         }
-        
-    });
-};
+//var upload = multer({ dest: '../uploads/' })
+var upload = multer({ storage: storage })
+
+//FOR MULTIPLE FILE UPLOAD
+app.post('/profile',upload.array('avatar', global.MAX_UPLOAD_LIMIT), function (req, res, next) {
+
+
+//FOR SINGLE FILE UPLOAD
+//app.post('/profile',upload.single('avatar'), function (req, res, next) {
+	
+
+	
+  
+  try {
+        //res.send(req.files);
+		res.render('goback');
+		var _total_size_in_MB = 0;
+		req.files.map((_file_info)=>{
+			var _file_size_in_MB = _file_info.size/1048576;
+			console.log("\n\n\n\n "+_file_info.originalname);
+			console.log("\n "+_file_size_in_MB+" MB");
+			_total_size_in_MB += _file_info.size;
+	})
+	_total_size_in_MB /= 1048576;
+	console.log("\n\n\n\n TOTAL SIZE : "+_total_size_in_MB+" MB");
+	
+	
+    } catch(error) {
+          console.log(error);
+           res.send(400);
+    }
 
 })
 
